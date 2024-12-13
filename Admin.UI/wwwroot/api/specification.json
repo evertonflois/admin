@@ -1,0 +1,78 @@
+{
+  "x-generator": "NSwag v13.20.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PSFat API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/E_710_User": {
+      "get": {
+        "tags": [
+          "E_710_User"
+        ],
+        "operationId": "E_710_User_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListaVmOfUsuarioDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ListaVmOfUsuarioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lista": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsuarioDto"
+            }
+          }
+        }
+      },
+      "UsuarioDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cd_asnt": {
+            "type": "integer"
+          },
+          "nr_enti": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cd_user": {
+            "type": "string"
+          },
+          "nm_user": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "description": "Type into the textbox: Bearer {your JWT token}.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ]
+}

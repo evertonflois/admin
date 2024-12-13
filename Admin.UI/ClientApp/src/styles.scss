@@ -1,0 +1,106 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+@import "../node_modules/prismjs/themes/prism-coy.css";
+
+.p-paginator-left-content{
+    margin-right: 0 !important;    
+}
+
+.p-paginator-left-content button{
+    position: relative;
+    right: 10px;
+}
+
+.surface-border {
+    border-color: #adb2b8 !important;
+}
+
+label {
+    color: #495057;
+}
+
+.field-invalid, .field-invalid .p-dropdown, .field-invalid .p-dropdown:not(.p-disabled):hover {
+    border-color: #ce8484 !important;    
+}
+
+.field-invalid::placeholder, .field-invalid .p-dropdown .p-dropdown-label, .field-invalid .p-dropdown .p-dropdown-trigger-icon {
+    color: #ce8484;
+    opacity: 1; /* Firefox */
+  }
+  
+.field-invalid::-ms-input-placeholder { /* Edge 12 -18 */
+    color: #ce8484;
+}
+
+.p-dropdown {
+    width: 100% !important;
+}
+
+.required-label {
+    font-weight: bold;
+    color: #4c4c4c;
+}
+
+.required-label-touched {
+    color: #ce8484 !important;
+}
+
+input[disabled] {
+    color: #999c9f !important;
+    border-color: #cecfcf !important;
+}
+
+.p-button-label {
+    font-weight: bold;
+}
+
+.row-inactive {
+    color: #acabab !important;
+}
+
+tr.odd{
+    background-color: #dfdfff;
+}
+
+tr[data-p-highlight=true] {
+    color: #496d9c;
+    font-weight: bold;
+    outline: 0.15rem solid #BFDBFE;
+    outline-offset: 0.01rem;
+}
+
+.p-datatable-tbody .p-button {
+    margin-left: 5px !important;
+}
+
+.switchActive, .switchNotActive {
+    position: relative;
+    left: 5px;
+    bottom:7px;
+    color: #5d5d69; 
+    font-weight:bold;
+}
+
+.selectedRowInfo {
+    color: #5f5f94;
+    margin: 10px 0 10px 16px;
+    padding: 8px;
+    border: 1px solid #b5b5fe;
+    -webkit-box-shadow: 5px 5px 7px -4px rgb(34 55 81 / 75%);
+    -moz-box-shadow: 5px 5px 7px -4px rgb(34 55 81 / 75%);
+    box-shadow: 5px 5px 7px -4px rgb(34 55 81 / 75%);
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+}
+
+.selectedRowInfo span {
+    margin-right: 10px;
+}
+
+.tableRowInfo {
+    padding-top: 0 !important;
+}

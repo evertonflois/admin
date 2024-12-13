@@ -1,0 +1,10 @@
+{
+    "endpoint_auth": "https://localhost:5001/",
+    "endpoint_auto": "https://localhost:6001/",
+    "endpoint_cads": "https://localhost:7001/",
+    "crip_key": "1234567887654321",
+    "crip_iv": "1234567887654321",
+    "api_token": "api/T_710_UserLogin/Autenticar",
+
+    "lista_tipo_login": "I|Usuário Interno;T|Transportador"
+}

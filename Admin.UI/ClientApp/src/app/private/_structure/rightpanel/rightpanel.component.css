@@ -1,0 +1,18 @@
+#layout-right-sidebar {
+    z-index: 1000 !important;
+  }
+  
+  #layout-right-sidebar .submenu-content span.messager-name {
+    width: 210px !important;
+  }
+  
+  #layout-right-sidebar .submenu-content ul {
+    margin-top: 0px !important;
+  }
+  
+  #layout-right-sidebar .submenu-content ul li:hover {
+    background-color: #f1f1f1;
+    border-color: #f1f1f1;
+  }
+  
+  

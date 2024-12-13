@@ -1,0 +1,46 @@
+<div id="layout-right-sidebar" [ngClass]="{'layout-right-sidebar-active': appMain.rightPanelActive}"
+     (click)="appMain.onRightPanelClick()">
+    <div class="right-panel-scroll-content">
+        <p-tabView>
+            <p-tabPanel leftIcon="pi pi-inbox">
+                <div class="submenu-title">
+                    <span>Notificações</span>
+                </div>
+                <div class="submenu-content messages">
+                    <ul>
+                        <li>
+                            <a href="#" (click)="appMain.onRightPanelItemClick($event)">
+                                <div>
+                                    <img src="assets/layout/images/icon-profile.png"/>
+                                    <span class="time-stamp">1m</span>
+                                </div>
+                                <span class="messager-name">Novo Usúario</span>
+                                <span class="message-text">Foi cadastrado um novo usuário</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" (click)="appMain.onRightPanelItemClick($event)">
+                                <div>
+                                    <img src="assets/layout/images/icon-frete.png"/>
+                                    <span class="time-stamp">33m</span>
+                                </div>
+                                <span class="messager-name">Frete Liberado</span>
+                                <span class="message-text">Frete de conhecimento liberado para transporte...</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" (click)="appMain.onRightPanelItemClick($event)">
+                                <div>
+                                    <img src="assets/layout/images/icon-fatura.png"/>
+                                    <span class="time-stamp">2h</span>
+                                </div>
+                                <span class="messager-name">Nova Fatua</span>
+                                <span class="message-text">Fatura do cliente xxxxxxxxxxxxx no valor de R$ 150,00…</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>

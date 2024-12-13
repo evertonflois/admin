@@ -1,0 +1,15 @@
+<label [for]="identifier" [ngClass]="{'required-label': required, 'required-label-touched': form.submitted && (invalid | async) }">{{label}}</label>
+<input 
+    pInputText 
+    #input
+    [id]="identifier" 
+    [required]="required" 
+    [disabled]="disabled"
+    [(ngModel)]="value" 
+    [name]="id"     
+    [maxlength]="maxlength"
+    [placeholder]="form.submitted && (invalid | async) ? 'Campo obrigatório!' : placeholder"
+    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none w-full p-inputtext-sm"    
+    [ngClass]="{'field-invalid': form.submitted && (invalid | async), 'focus:border-primary': !form.submitted || !(invalid | async) }"
+    #field="ngModel"
+    />

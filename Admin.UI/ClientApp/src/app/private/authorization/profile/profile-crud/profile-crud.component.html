@@ -1,0 +1,106 @@
+<app-ps-toolbar #toolbar
+    [title]="getTitle()"
+    (NewClick)="new()"
+    (EditSelectedRowClick)="editSelectedRow()"
+    (SaveClick)="save($event)"
+    (CleanClick)="clean()"
+    (RemoveClick)="remove($event)"
+    (BackClick)="back()"
+    >
+</app-ps-toolbar>
+
+<div class="card" [hidden]="mode !== 'list'">
+    <p-table #dt       
+        [value]="gridRows"        
+        [loading]="loading"
+        [globalFilterFields]="['cd_perf', 'ds_perf']"        
+        [(selection)]="selectedRow"
+        dataKey="cd_perf"
+    >
+        <ng-template pTemplate="caption">
+            <div class="grid">
+                <div class="col col-12 md:col-2">
+                    <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>                
+                </div>
+                <div class="col col-12 md:col-10">
+                    <div class="text-center" style="margin-top: 6px;">            
+                        <p-inputSwitch [(ngModel)]="onlyActive" (click)="changeActiveFilter(onlyNotActive)" [disabled]="onlyNotActive"></p-inputSwitch><label class="switchActive"  [style]="{ 'color': onlyNotActive ? '#b5b5bc' : '#5d5d69' }">Somente ativos</label>
+                        <p-inputSwitch [(ngModel)]="onlyNotActive"  (click)="changeActiveFilter(onlyActive)" [disabled]="onlyActive" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotActive" [style]="{ 'color': onlyActive ? '#b5b5bc' : '#5d5d69' }">Somente inativos</label>
+                    </div>                    
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>                
+                <th *ngFor="let c of cols" [pSortableColumn]="c.field">{{c.header}} <p-sortIcon [field]="c.field"></p-sortIcon></th>                
+            </tr>
+            <tr>                
+                <th *ngFor="let c of cols">
+                    <p-columnFilter type="text" [field]="c.field"></p-columnFilter>
+                </th>                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row let-i="rowIndex">
+            <tr [class]="getRowCssClass(i, row)" [pSelectableRow]="row" (dblclick)="onRowDblClick($event, row)">                
+                <td *ngFor="let c of cols">
+                    {{ row[c.field] }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft"  style="margin-left: 0px;">
+            <p-button type="button" icon="pi pi-refresh" (click)="reset(true)" styleClass="p-button-text" title="Reiniciar"></p-button>
+        </ng-template>        
+    </p-table>
+</div>
+
+<div class="card" [hidden]="mode !== 'form'">
+    <p-progressBar #progressBarForm mode="indeterminate" [style]="{ height: '6px' }" [hidden]="!showFormLoading"></p-progressBar>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+        <div class="formgrid grid">
+            <div class="field col-12 md:col-6">
+                <app-ps-select 
+                    #selectAsnt
+                    [id]="'cd_asnt'" 
+                    [lazy]="true"
+                    [dataService]="SubscriberService" 
+                    [optionLabel]="'nm_asnt'"
+                    [label]="'Assinante'" 
+                    [form]="form" 
+                    [required]="true"
+                    [disabled]="editing" 
+                    [(ngModel)]="model.cd_asnt"                    
+                    (SelectLoaded)="selectLoaded(selectAsnt)"
+                    name="cd_asnt"></app-ps-select>
+            </div>            
+            <div class="field col-12 md:col-4">
+                <app-ps-textbox 
+                    [id]="'cd_perf'" 
+                    [label]="'Código'" 
+                    [form]="form" 
+                    [required]="true" 
+                    [disabled]="editing" 
+                    [maxlength]="25"                    
+                    [(ngModel)]="model.cd_perf" 
+                    name="cd_perf">
+                </app-ps-textbox>
+            </div>
+            <div class="field col-12 md:col-8">
+                <app-ps-textbox 
+                    [id]="'ds_perf'" 
+                    [label]="'Descrição'" 
+                    [form]="form" 
+                    [required]="true"
+                    [disabled]="editing && !can.Save()"  
+                    [maxlength]="100"                    
+                    [(ngModel)]="model.ds_perf" 
+                    name="ds_perf">
+                </app-ps-textbox>
+            </div>           
+            <div class="field col-12">
+                <app-ps-active [(ngModel)]="model.fl_atvo" name="fl_atvo" [form]="form" [disabled]="editing && !can.Save()"></app-ps-active>
+            </div>            
+        </div>
+    </form>    
+</div>

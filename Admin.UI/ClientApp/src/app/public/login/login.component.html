@@ -1,0 +1,50 @@
+<div class="login-body">
+    <div class="login-topbar">
+        <!-- <a href="#" class="logo">
+            <img src="assets/layout/images/logo_white.png" alt="california-layout"/>
+        </a> -->
+    </div>    
+    <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+    <!-- <img class="login-image" src="assets/layout/images/image-access.png" alt="california-layout" /> -->
+
+    <div class="login-panel p-fluid p-grid p-nogutter p-d-flex p-justify-center p-ai-center">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="grid">            
+                <div class="col-12 lg:col-12 md:col-12 logo-container">
+                    <span class="login-summary">Admin</span>
+                    <div class="login-detail">
+                        <span>Welcome to Admin System.</span>
+                    </div>
+                </div>
+                <div class="col-12 lg:col-12 md:col-12">
+                    <div class="input-wrapper">
+                        <label>Login</label>
+                        <input type="text" formControlName="login" autocomplete="off" placeholder="Login" pInputText  [ngClass]="{ 'is-invalid': submitted && f.login.errors }">
+                        <div *ngIf="submitted && f.login.errors" class="invalid-feedback">
+                            <div *ngIf="f.login.errors.required">Login is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 lg:col-12 md:col-12">
+                    <div class="input-wrapper">
+                        <label>Password</label>
+                        <input type="password" formControlName="password" autocomplete="off" placeholder="Password" pInputText [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-12 lg:col-12 md:col-12 chkbox-container">
+                    <div class="remember-me">
+                        <input type="checkbox" class="p-chkbox p-chkbox-box">
+                        <span>Remember me</span>
+                        <a href="#">Reset Password</a>
+                    </div>
+                </div> -->
+                <div class="col-12 lg:col-12 md:col-12 button-container">
+                    <button type="submit" pButton label="Login"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<label [ngClass]="{'required-label': required, 'required-label-touched': form.submitted && (invalid | async) }">{{label}}</label>
+<div class="select-container">
+    <p-dropdown 
+        [id]="identifier"
+        [options]="dataOptions" 
+        [(ngModel)]="value" 
+        [optionLabel]="optionLabel" 
+        [filter]="true" 
+        filterBy="name" 
+        [showClear]="true" 
+        placeholder="Selecione ..." 
+        [ngClass]="{'field-invalid': form.submitted && (invalid | async) }"
+        [disabled]="isDisabled()"
+        (onChange)="onSelectChange($event)">
+        <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="value">            
+                <div>{{ getSelectedValue() }}</div>
+            </div>
+        </ng-template>
+        <ng-template let-option pTemplate="item">
+            <div class="flex align-items-center gap-2">            
+                <div>{{ option[id] + ' - ' +  option[optionLabel] }}</div>
+            </div>
+        </ng-template>
+    </p-dropdown>
+</div>

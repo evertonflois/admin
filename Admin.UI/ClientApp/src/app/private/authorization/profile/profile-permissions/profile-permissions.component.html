@@ -1,0 +1,80 @@
+<p-toolbar [style]="{ 'height': '40px', 'padding': '0px', 'border-radius': '.0rem', 'background-image': 'linear-gradient(to left, #5475be, var(--gray-50))' }">
+    <ng-template pTemplate="start">    
+        <div class="flex align-items-center gap-3" style="color: #5475be">
+            <h5 style="margin:10px;">{{getTitle()}}</h5>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="center">
+        <div class="flex flex-wrap align-items-center gap-3">            
+        </div>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <div class="flex align-items-center gap-2">             
+            <button class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200" *ngIf="can.CanChangePermissions()" (click)="change()" title="Salvar"><i class="pi pi-save text-xl"></i></button>
+            <button class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200" *ngIf="can.Back()" (click)="backTab()" title="Voltar"><i class="pi pi-arrow-circle-left text-xl"></i></button>
+        </div>
+    </ng-template>
+</p-toolbar>
+
+<app-ps-rowinfo #rowInfo></app-ps-rowinfo>
+
+<div class="card tableRowInfo" [hidden]="mode !== 'list'">
+    <p-table #dt       
+        [value]="gridRows"        
+        [loading]="loading"
+        [globalFilterFields]="['cd_trsc', 'ds_trsc']"        
+        [(selection)]="selectedRow"
+        dataKey="cd_trsc"
+        selectionMode="multiple" 
+        [(selection)]="selectedRows"
+        [scrollable]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="grid">
+                <div class="col col-12 md:col-2">
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>                
+                </div>
+                <div class="col col-12 md:col-10">
+                    <div class="text-center" style="margin-top: 6px;">            
+                        <p-inputSwitch [(ngModel)]="onlyAllowed" (click)="changeAllowedFilter(onlyNotAllowed)" [disabled]="onlyNotAllowed"></p-inputSwitch><label class="switchAllowed"  [style]="{ 'color': onlyNotAllowed ? '#b5b5bc' : '#5d5d69' }">Somente permitidos</label>
+                        <p-inputSwitch [(ngModel)]="onlyNotAllowed"  (click)="changeAllowedFilter(onlyAllowed)" [disabled]="onlyAllowed" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotAllowed" [style]="{ 'color': onlyAllowed ? '#b5b5bc' : '#5d5d69' }">Somente não permitidos</label>
+                    </div>                    
+                </div>
+            </div>            
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>                
+                <th style="min-width: 20px;" pFrozenColumn>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th style="min-width: 178px;" pSortableColumn="cd_trsc" pFrozenColumn>Código <p-sortIcon field="cd_trsc"></p-sortIcon></th>
+                <th style="min-width: 272px;" pSortableColumn="ds_trsc" pFrozenColumn>Transação <p-sortIcon field="ds_trsc"></p-sortIcon></th>
+                <th style="min-width: 800px;">Ações</th>
+            </tr>
+            <tr>       
+                <th pFrozenColumn></th>         
+                <th pFrozenColumn><p-columnFilter type="text" field="cd_trsc"></p-columnFilter></th>
+                <th pFrozenColumn><p-columnFilter type="text" field="ds_trsc"></p-columnFilter></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row let-i="rowIndex">
+            <tr [class]="getRowCssClass(i, row)">                
+                <td style="min-width: 20px;" pFrozenColumn>
+                    <p-tableCheckbox [value]="row" [disabled]="!can.CanChangePermissions()"></p-tableCheckbox>
+                </td>
+                <td style="min-width: 178px;" pFrozenColumn>{{ row.cd_trsc }}</td>
+                <td style="min-width: 272px;" pFrozenColumn>{{ row.ds_trsc }}</td>
+                <td>
+                    <span>
+                        <p-toggleButton *ngFor="let a of row.acoes" [(ngModel)]="a.fl_perm" [onLabel]="a.ds_acao" [offLabel]="a.ds_acao" [disabled]="!can.CanChangePermissions()"></p-toggleButton>
+                    </span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft"  style="margin-left: 0px;">
+            <p-button type="button" icon="pi pi-refresh" (click)="reset(true)" styleClass="p-button-text" title="Reiniciar"></p-button>
+        </ng-template>        
+    </p-table>
+</div>

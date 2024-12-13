@@ -1,0 +1,12 @@
+.layout-footer {
+    padding: 10px 25px;
+  }
+  
+  .layout-footer p {
+    margin-top: 3px;
+  }
+  
+  .layout-footer .footer-right {
+    padding-top: 10px;
+    text-align: right;
+  }

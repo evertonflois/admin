@@ -1,0 +1,12 @@
+<p-tabView [(activeIndex)]="activeIndex" (onChange)="onTabViewChanged($event)">
+    <p-tabPanel header="Profiles">
+        <app-profile-crud
+            (profileSelected)="onprofileSelected($event)"
+        ></app-profile-crud>
+    </p-tabPanel>
+    <p-tabPanel header="Permissions" [disabled]="!profileSelected">
+        <app-profile-permissions>
+        </app-profile-permissions>
+    </p-tabPanel>   
+</p-tabView>
+    

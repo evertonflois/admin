@@ -1,0 +1,102 @@
+.login-body {
+    // Image by <a href="https://www.vecteezy.com/free-vector/investment">Investment Vectors by Vecteezy</a>
+    background: url(../../layout/images/fundo-login.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100vh;
+    .login-topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 99999;
+        @include border-box();
+        height: 60px;
+        @include background-gradient-diagonal($topbarLeftBgColor, $topbarRightBgColor);
+        .logo {
+            @include border-box();
+            width: 230px;
+            padding: 10px 100px;
+            display: inline-block;
+            text-align: center;
+            img {
+                height: 40px;
+            }
+        }
+    }
+    .login-image {
+        @include border-box();
+        width: 100%;
+        position: absolute;
+        top: 60px;
+    }
+    .login-panel {
+        @include border-box();
+        padding: 6% 0 0 100px;
+        width: 500px;
+        .login-icon {
+            max-width: 75px;
+            max-height: 75px;
+            margin-bottom: 25px;
+        }
+        .grid {      
+            -webkit-box-shadow: -1px 1px 5px 0px rgba(47,70,121,1);
+            -moz-box-shadow: -1px 1px 5px 0px rgba(47,70,121,1);
+            box-shadow: -1px 1px 5px 0px rgba(47,70,121,1);
+            padding: 10px;
+            background-color: rgba(255,255,255,.4);
+            .logo-container {
+                padding: 0;
+                .login-summary {
+                    line-height: 48px;
+                    font-size: 36px;
+                    font-weight: bold;
+                    text-align: left;
+                    color: #405d9a;
+                }
+                .login-detail {
+                    line-height: 20px;
+                    font-size: 16px;
+                    text-align: left;
+                    color: #2e3a55;
+                }
+            }
+            .col-12 {
+                padding: 15px 0px;
+                .p-inputtext {
+                    display: block;
+                    margin-top: 5px;
+                }
+                &.chkbox-container {
+                    a {
+                        float: right;
+                    }
+                }
+                .p-checkbox {
+                    margin-right: 5px;
+                }
+                .p-outputlabel {
+                    vertical-align: middle;
+                }
+            }
+            .p-button {
+                width: 130px;
+                border-radius: 3px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .login-body {
+        .login-panel {
+            padding: 150px 25px 0 25px;
+            width: 100%;
+            .login-icon-container {
+                text-align: center;
+            }
+        }
+    }
+}

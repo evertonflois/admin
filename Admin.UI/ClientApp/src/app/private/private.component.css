@@ -1,0 +1,15 @@
+.loading {
+    color: white;
+    padding-top: 50px;
+  }
+
+  /* .layout-wrapper .layout-sidebar {
+    min-width: 230px !important;
+    width: auto !important;
+  } */
+
+  @media screen and (max-width: 1024px) {
+    .layout-wrapper .layout-main {
+      padding-top: 70px !important;
+    }
+  }
