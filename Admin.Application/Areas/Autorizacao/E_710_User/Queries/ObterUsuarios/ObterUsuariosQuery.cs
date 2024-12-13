@@ -2,10 +2,10 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using PSFat.Application.Common.Models;
-using PSFat.Domain.Interfaces.Repositories.Autorizacao;
+using Admin.Application.Common.Models;
+using Admin.Domain.Interfaces.Repositories.Autorizacao;
 
-namespace PSFat.Application.Areas.Autorizacao.E_710_User.Queries.ObterUsuarios;
+namespace Admin.Application.Areas.Autorizacao.E_710_User.Queries.ObterUsuarios;
 
 public record ObterUsuariosQuery : IRequest<ListaVm<UsuarioDto>>;
 

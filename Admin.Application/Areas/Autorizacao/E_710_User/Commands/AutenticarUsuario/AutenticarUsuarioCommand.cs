@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-using PSFat.Domain.Interfaces.Repositories.Autorizacao;
+using Admin.Domain.Interfaces.Repositories.Autorizacao;
 
-namespace PSFat.Application.Areas.Autorizacao.E_710_User.Commands.AutenticarUsuario;
+namespace Admin.Application.Areas.Autorizacao.E_710_User.Commands.AutenticarUsuario;
 
 public record AutenticarUsuarioCommand : IRequest<UsuarioAutenticadoDto>
 {

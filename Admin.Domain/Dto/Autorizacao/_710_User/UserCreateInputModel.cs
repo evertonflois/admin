@@ -1,6 +1,6 @@
-﻿using PSFat.Domain.Entities.Autorizacao;
+﻿using Admin.Domain.Entities.Autorizacao;
 
-namespace PSFat.Application.Dto.Autorizacao._710_User
+namespace Admin.Application.Dto.Autorizacao._710_User
 {
     public class UserCreateInputModel : BaseCrudCreateModel, IMapFrom<E_710_User>
     {

@@ -1,4 +1,4 @@
-﻿namespace PSFat.Application.Areas.Autorizacao.E_710_User.Queries.ObterUsuarios
+﻿namespace Admin.Application.Areas.Autorizacao.E_710_User.Queries.ObterUsuarios
 {
     public class UsuarioDto
     {

@@ -1,4 +1,4 @@
-﻿namespace PSFat.Application.Dto
+﻿namespace Admin.Application.Dto
 {
     public class MaintenanceViewModel
     {

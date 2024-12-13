@@ -1,4 +1,4 @@
-﻿namespace PSFat.Application.Dto
+﻿namespace Admin.Application.Dto
 {
     public abstract class BaseCrudCreateModel
     {
