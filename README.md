@@ -1,5 +1,5 @@
 # Admin System
-SPA admin system using:
+Admin system using:
 
 * Angular 17
 * .Net 7
