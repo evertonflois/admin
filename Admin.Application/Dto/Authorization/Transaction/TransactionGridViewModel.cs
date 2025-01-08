@@ -4,7 +4,7 @@ namespace Admin.Application.Dto.Authorization.Transaction;
 
 public class TransactionGridViewModel : BaseGridViewModel
 {
-    public string? SubscriberId { get; set; }
+    public Guid? SubscriberId { get; set; }
     public string? ProfileCode { get; set; }
     public string? TransactionCode { get; set; }
     public string? Description { get; set; }

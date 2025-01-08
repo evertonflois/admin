@@ -5,7 +5,7 @@ namespace Admin.Domain.Entities.Authorization;
 public class User : BaseEntity
 {
     [EntityField(IsKey = true)]
-    public string? SubscriberId { get; set; }
+    public Guid? SubscriberId { get; set; }
     [EntityField(IsKey = true)]
     public string? Login { get; set; }
     public string? Name { get; set; }

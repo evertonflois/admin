@@ -11,9 +11,13 @@ public static class DependencyInjectionSetup
     public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-                                                    options.SerializerSettings.ContractResolver =
-                                                    new CamelCasePropertyNamesContractResolver());
+            //.AddNewtonsoftJson(options =>
+            //                                        options.SerializerSettings.ContractResolver =
+            //                                        new CamelCasePropertyNamesContractResolver());
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
         services.AddApplicationServices();
         services.AddInfrastructure(configuration);
         services.AddWebUIServices();

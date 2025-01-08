@@ -11,7 +11,7 @@ namespace Admin.Infra.Repositories.Authorization
 {    
     public class TransactionRepository : RepositoryBase<Transaction, ResponseBase>, ITransactionRepository
     {
-        public TransactionRepository(IUnitOfWorkRepository uoW) : base(uoW, "Transaction")
+        public TransactionRepository(IUnitOfWorkRepository uoW) : base(uoW, "[Transaction]")
         {
         }
 
@@ -24,9 +24,9 @@ namespace Admin.Infra.Repositories.Authorization
 	                                    t1.TransactionCode,
 	                                    t1.Description,
                                         t1.Active,
-	                                    fl_perm = case when t2.TransactionCode is not null then 'Y' else 'N' end                                        
+	                                    FlagPermission = case when t2.TransactionCode is not null then 'Y' else 'N' end                                        
                                     FROM
-	                                    Transaction t1 (nolock)
+	                                    [Transaction] t1 (nolock)
                                     LEFT JOIN
 	                                    ProfileTransactions t2 (nolock)
                                     ON
@@ -45,13 +45,13 @@ namespace Admin.Infra.Repositories.Authorization
         {
             if (filter != null)
             {
-                if (filter.Any(f => f.Name == "fl_perm"))
+                if (filter.Any(f => f.Name == "FlagPermission"))
                 {
-                    var sqlQueryCondition = base.getAllQueryFilterCondition(filter.Where(f => f.Name != "fl_perm" && f.Name != "ProfileCode"));
+                    var sqlQueryCondition = base.getAllQueryFilterCondition(filter.Where(f => f.Name != "FlagPermission" && f.Name != "ProfileCode"));
 
                     sqlQueryCondition = string.Concat(sqlQueryCondition, addQueryWhere(sqlQueryCondition));
 
-                    var fl_perm = filter.First(f => f.Name == "fl_perm").Value;
+                    var fl_perm = filter.First(f => f.Name == "FlagPermission").Value;
 
                     if (fl_perm == "Y")
                         sqlQueryCondition = string.Concat(sqlQueryCondition, " and t2.TransactionCode is not null ");
@@ -62,7 +62,7 @@ namespace Admin.Infra.Repositories.Authorization
                 }
             }
             
-            return base.getAllQueryFilterCondition(filter.Where(f => f.Name != "ProfileCode"));
+            return base.getAllQueryFilterCondition(filter/*.Where(f => f.Name != "ProfileCode")*/);
         }
 
         public override string getColumnPrefix(string? column)
@@ -83,7 +83,7 @@ namespace Admin.Infra.Repositories.Authorization
                     SELECT 
 	                    t1.*
                     FROM
-	                    Transaction t1 (nolock)
+	                    [Transaction] t1 (nolock)
                     INNER JOIN
 	                    ProfileTransactions t2 (nolock)
                     ON
@@ -111,7 +111,7 @@ namespace Admin.Infra.Repositories.Authorization
                     SELECT 
 	                    t1.*
                     FROM
-	                    Transaction t1 (nolock)
+	                    [Transaction] t1 (nolock)
                     INNER JOIN
 	                    ProfileTransactions t2 (nolock)
                     ON

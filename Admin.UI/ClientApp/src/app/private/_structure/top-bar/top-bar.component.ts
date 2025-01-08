@@ -16,7 +16,7 @@ export class TopBarComponent {
     public appMain: PrivateComponent,
     private authService: AuthService,)
     {
-      this.userName = this.authService.getUser().cd_user;
+      this.userName = this.authService.getUser().Login;
     }
 
     logout() {

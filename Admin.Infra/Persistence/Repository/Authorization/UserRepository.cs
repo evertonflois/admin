@@ -8,7 +8,7 @@ namespace Admin.Infra.Repositories.Authorization
 {
     public class UserRepository : RepositoryBase<User, ResponseBase>, IUserRepository
     {
-        public UserRepository(IUnitOfWorkRepository uoW) : base(uoW, "User")
+        public UserRepository(IUnitOfWorkRepository uoW) : base(uoW, "[User]")
         {
         }
 
@@ -19,7 +19,7 @@ namespace Admin.Infra.Repositories.Authorization
                                     t1.*,
                                     t2.Description
                                 from 
-                                    User t1 (nolock)
+                                    [User] t1 (nolock)
                                 left join
                                     Profile t2 (nolock)
                                 on
@@ -34,6 +34,8 @@ namespace Admin.Infra.Repositories.Authorization
         {
             if (column != null)
             {
+                if (column.Equals("SubscriberId"))
+                    return "t1.";
                 if (column.Equals("Description"))
                     return "t2.";
                 else if (column.Equals("Active"))

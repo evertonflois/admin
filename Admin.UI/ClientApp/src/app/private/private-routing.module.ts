@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { PrivateComponent } from './private.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from '../_helpers/guard/auth-guard';
-import { UsuarioComponent } from './authorization/usuario/usuario.component';
 import { ProfileComponent } from './authorization/profile/profile.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { UserComponent } from './authorization/user/user.component';
 
 const routes: Routes = [
   {
@@ -28,12 +28,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },      
       {
-        path: 'autorizacao/usuario',
-        component: UsuarioComponent,
+        path: 'authorization/user',
+        component: UserComponent,
         canActivate: [AuthGuard],
       },
       {
-        path: 'autorizacao/perfil',
+        path: 'authorization/profile',
         component: ProfileComponent,
         canActivate: [AuthGuard],
       },

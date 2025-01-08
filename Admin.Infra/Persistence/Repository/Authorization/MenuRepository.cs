@@ -38,7 +38,7 @@ namespace Admin.Infra.Repositories.Authorization
 					SELECT
 						*
 					FROM
-						Menu t1 (nolock)
+						Menu tm (nolock)
 					WHERE
 						EXISTS(
 						SELECT 
@@ -46,9 +46,9 @@ namespace Admin.Infra.Repositories.Authorization
 						FROM
 							tbl_tran t1 (nolock)
 						WHERE
-							t1.Level < t1.Level
+							tm.Level < t1.Level
 						AND
-							LEFT(t1.GroupingCode, 3) = LEFT(t1.GroupingCode, 3)
+							LEFT(tm.GroupingCode, 3) = LEFT(t1.GroupingCode, 3)
 						)
 					UNION ALL
 					SELECT

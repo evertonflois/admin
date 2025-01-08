@@ -13,9 +13,9 @@
     <p-table #dt       
         [value]="gridRows"        
         [loading]="loading"
-        [globalFilterFields]="['cd_user', 'nm_user', 'ds_perf']"        
+        [globalFilterFields]="['Login', 'Name', 'ProfileCode']"        
         [(selection)]="selectedRow"
-        dataKey="cd_user"
+        dataKey="Login"
     >
         <ng-template pTemplate="caption">
             <div class="grid">
@@ -26,8 +26,8 @@
                 </div>
                 <div class="col col-12 md:col-10">
                     <div class="text-center" style="margin-top: 6px;">            
-                        <p-inputSwitch [(ngModel)]="onlyActive" (click)="changeActiveFilter(onlyNotActive)" [disabled]="onlyNotActive"></p-inputSwitch><label class="switchActive"  [style]="{ 'color': onlyNotActive ? '#b5b5bc' : '#5d5d69' }">Somente ativos</label>
-                        <p-inputSwitch [(ngModel)]="onlyNotActive"  (click)="changeActiveFilter(onlyActive)" [disabled]="onlyActive" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotActive" [style]="{ 'color': onlyActive ? '#b5b5bc' : '#5d5d69' }">Somente inativos</label>
+                        <p-inputSwitch [(ngModel)]="onlyActive" (click)="changeActiveFilter(onlyNotActive)" [disabled]="onlyNotActive"></p-inputSwitch><label class="switchActive"  [style]="{ 'color': onlyNotActive ? '#b5b5bc' : '#5d5d69' }">Only Active</label>
+                        <p-inputSwitch [(ngModel)]="onlyNotActive"  (click)="changeActiveFilter(onlyActive)" [disabled]="onlyActive" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotActive" [style]="{ 'color': onlyActive ? '#b5b5bc' : '#5d5d69' }">Only Inactive</label>
                     </div>                    
                 </div>
             </div>
@@ -62,85 +62,87 @@
             <div class="field col-12 md:col-6">
                 <app-ps-select 
                     #selectAsnt
-                    [id]="'cd_asnt'" 
+                    [id]="'SubscriberId'" 
+                    [showId]="false"
                     [lazy]="true"
                     [dataService]="SubscriberService" 
-                    [optionLabel]="'nm_asnt'"
-                    [label]="'Assinante'" 
+                    [optionLabel]="'Name'"
+                    [label]="'Subscriber'" 
                     [form]="form" 
                     [required]="true"
                     [disabled]="editing" 
-                    [(ngModel)]="model.cd_asnt"
-                    [nestedSelects]="[selectPerf]"
+                    [(ngModel)]="model.SubscriberId"
+                    [nestedSelects]="[selectProfile]"
                     (SelectLoaded)="selectLoaded(selectAsnt)"
-                    name="cd_asnt"></app-ps-select>
+                    name="SubscriberId"></app-ps-select>
             </div>
             <div class="field col-12 md:col-6">
                 
             </div>
             <div class="field col-12 md:col-4">
                 <app-ps-textbox 
-                    [id]="'cd_user'" 
+                    [id]="'Login'" 
                     [label]="'Login'" 
                     [form]="form" 
                     [required]="true" 
                     [disabled]="editing" 
                     [maxlength]="30"                    
-                    [(ngModel)]="model.cd_user" 
-                    name="cd_user">
+                    [(ngModel)]="model.Login" 
+                    name="Login">
                 </app-ps-textbox>
             </div>
             <div class="field col-12 md:col-8">
                 <app-ps-textbox 
-                    [id]="'nm_user'" 
-                    [label]="'Nome'" 
+                    [id]="'Name'" 
+                    [label]="'Name'" 
                     [form]="form" 
                     [required]="true"
                     [disabled]="editing && !can.Save()" 
                     [maxlength]="50"                    
-                    [(ngModel)]="model.nm_user" 
-                    name="nm_user">
+                    [(ngModel)]="model.Name" 
+                    name="Name">
                 </app-ps-textbox>
             </div>
             <div class="field col-12 md:col-2">
                 <app-ps-textbox 
-                    [id]="'nr_fone'" 
-                    [label]="'Telefone / Ramal'" 
+                    [id]="'Phone'" 
+                    [label]="'Phone'" 
                     [form]="form" 
                     [disabled]="editing && !can.Save()"                     
                     [maxlength]="20"                    
-                    [(ngModel)]="model.nr_fone" 
-                    name="nr_fone">
+                    [(ngModel)]="model.Phone" 
+                    name="Phone">
                 </app-ps-textbox>
             </div>
             <div class="field col-12 md:col-4">
                 <app-ps-textbox 
-                    [id]="'ds_mail'" 
-                    [label]="'E-mail'" 
+                    [id]="'Email'" 
+                    [label]="'Email'" 
                     [form]="form" 
                     [disabled]="editing && !can.Save()" 
                     [maxlength]="100"                    
-                    [(ngModel)]="model.ds_mail" 
-                    name="ds_mail">
+                    [(ngModel)]="model.Email" 
+                    name="Email">
                 </app-ps-textbox>
             </div>
             <div class="field col-12 md:col-6">
                 <app-ps-select 
-                    #selectPerf                    
-                    [id]="'cd_perf'" 
+                    #selectProfile                    
+                    [id]="'ProfileCode'" 
+                    [showId]="false"
                     [lazy]="true"
                     [dataService]="ProfileService" 
-                    [optionLabel]="'ds_perf'"
-                    [label]="'Perfil'" 
+                    [optionLabel]="'Description'"
+                    [label]="'Profile'" 
                     [form]="form" 
                     [required]="true" 
                     [disabled]="editing && !can.Save()" 
-                    [(ngModel)]="model.cd_perf"
-                    (SelectLoaded)="selectLoaded(selectPerf)"
-                    name="cd_perf"></app-ps-select>
+                    [(ngModel)]="model.ProfileCode"
+                    (SelectLoaded)="selectLoaded(selectProfile)"
+                    name="ProfileCode"></app-ps-select>
             </div>
             <div class="field col-12">
-                <app-ps-active [(ngModel)]="model.fl_atvo" name="fl_atvo" [form]="form" [disabled]="editing && !can.Save()"></app-ps-active>
+                <app-ps-active [(ngModel)]="model.Active" name="Active" [form]="form" [disabled]="editing && !can.Save()"></app-ps-active>
             </div>            
         </div>
     </form>    

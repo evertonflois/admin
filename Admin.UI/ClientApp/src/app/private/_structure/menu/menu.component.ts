@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/_services/auth.service';
     selector: 'app-menu',
     template: `
 		<ul class="layout-menu">
-			<li app-menuitem *ngFor="let item of model; let i = index;" [item]="item" [index]="i" [root]="true"></li>
+			<li app-menuitem *ngFor="let Item of model; let i = index;" [item]="Item" [index]="i" [root]="true"></li>
 		</ul>
     `
 })
@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
     constructor(public app: PrivateComponent, private authService: AuthService) {}
 
     ngOnInit() {
-        this.model = this.authService.getUser().menu;
+        this.model = this.authService.getUser().Menu;
         
         // [
         //     {label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/']},

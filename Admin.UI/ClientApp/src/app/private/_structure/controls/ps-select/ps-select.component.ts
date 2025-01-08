@@ -37,6 +37,9 @@ export class PsSelectComponent extends ElementBase<any> implements OnInit {
   @Input()
   lazy = false;
 
+  @Input()
+  showId = true;
+
   @ViewChild(NgModel)
    model!: NgModel;
   
@@ -122,7 +125,8 @@ export class PsSelectComponent extends ElementBase<any> implements OnInit {
   }
 
   getSelectedValue() {
-    return this.value ? `${this.value[this.id]} - ${this.value[this.optionLabel]}` 
+    return this.value ? 
+                      this.showId ? `${this.value[this.id]} - ${this.value[this.optionLabel]}` : `${this.value[this.optionLabel]}`
                       : undefined;
   }
 

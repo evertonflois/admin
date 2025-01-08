@@ -26,8 +26,8 @@
                 </div>
                 <div class="col col-12 md:col-10">
                     <div class="text-center" style="margin-top: 6px;">            
-                        <p-inputSwitch [(ngModel)]="onlyActive" (click)="changeActiveFilter(onlyNotActive)" [disabled]="onlyNotActive"></p-inputSwitch><label class="switchActive"  [style]="{ 'color': onlyNotActive ? '#b5b5bc' : '#5d5d69' }">Somente ativos</label>
-                        <p-inputSwitch [(ngModel)]="onlyNotActive"  (click)="changeActiveFilter(onlyActive)" [disabled]="onlyActive" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotActive" [style]="{ 'color': onlyActive ? '#b5b5bc' : '#5d5d69' }">Somente inativos</label>
+                        <p-inputSwitch [(ngModel)]="onlyActive" (click)="changeActiveFilter(onlyNotActive)" [disabled]="onlyNotActive"></p-inputSwitch><label class="switchActive"  [style]="{ 'color': onlyNotActive ? '#b5b5bc' : '#5d5d69' }">Only Active</label>
+                        <p-inputSwitch [(ngModel)]="onlyNotActive"  (click)="changeActiveFilter(onlyActive)" [disabled]="onlyActive" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotActive" [style]="{ 'color': onlyActive ? '#b5b5bc' : '#5d5d69' }">Only Inactive</label>
                     </div>                    
                 </div>
             </div>
@@ -62,17 +62,18 @@
             <div class="field col-12 md:col-6">
                 <app-ps-select 
                     #selectAsnt
-                    [id]="'cd_asnt'" 
+                    [id]="'SubscriberId'" 
+                    [showId]="false"
                     [lazy]="true"
                     [dataService]="SubscriberService" 
-                    [optionLabel]="'nm_asnt'"
-                    [label]="'Assinante'" 
+                    [optionLabel]="'Name'"
+                    [label]="'Subscriber'" 
                     [form]="form" 
                     [required]="true"
                     [disabled]="editing" 
-                    [(ngModel)]="model.cd_asnt"                    
+                    [(ngModel)]="model.SubscriberId"                    
                     (SelectLoaded)="selectLoaded(selectAsnt)"
-                    name="cd_asnt"></app-ps-select>
+                    name="SubscriberId"></app-ps-select>
             </div>            
             <div class="field col-12 md:col-4">
                 <app-ps-textbox 

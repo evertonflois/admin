@@ -5,7 +5,7 @@ namespace Admin.Application.Dto
     public class AuthViewModel
     {
         public string? Login { get; set; }
-        public int CodigoEntidade { get; set; }
+        public Guid? SubscriberId { get; set; }
         public string? Token { get; set; }
         public bool Success { get; set; }
         public string? Message { get; set; }

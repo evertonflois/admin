@@ -34,9 +34,9 @@ namespace Admin.Application.Services.Authorization
             {
                 // attach user to context on successful jwt validation
                 if (userId.Equals(_appSettings.Admin.Login))
-                    context.Items["User"] = new UserIdentity() { SubscriberId = Guid.NewGuid().ToString(), ProfileCode = "ADM", Login = userId, Name = "Admin" };
+                    context.Items["User"] = new UserIdentity() { SubscriberId = Guid.NewGuid(), ProfileCode = "ADM", Login = userId, Name = "Admin" };
                 else
-                    context.Items["User"] = _mapper.Map<UserIdentity>(await base.GetDetails(new { cd_user = userId }));
+                    context.Items["User"] = _mapper.Map<UserIdentity>(await base.GetDetails(new { Login = userId }));
             }
         }
 

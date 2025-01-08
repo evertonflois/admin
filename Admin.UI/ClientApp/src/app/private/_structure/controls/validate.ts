@@ -62,13 +62,13 @@ export const validate =
 export const message = (validator: ValidationResult, key: string): string => {
     switch (key) {
         case 'required':
-            return 'Campo obrigatório';
+            return 'Field required';
         case 'pattern':
             return 'Value does not match required pattern';
         case 'minlength':
-            return 'Mínimo de caracteres permitido : N';
+            return 'Min number of chars allowed : N';
         case 'maxlength':
-            return 'Máximo de caracteres permitido : N';      
+            return 'Max number of chars allowed : N';      
     }
 
     switch (typeof validator[key]) {

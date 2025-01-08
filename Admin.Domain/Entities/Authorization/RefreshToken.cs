@@ -10,7 +10,7 @@ public class RefreshToken
     [Key]
     [JsonIgnore]
     [EntityField(IsKey = true)]
-    public string? SubscriberId { get; set; }
+    public Guid? SubscriberId { get; set; }
     [EntityField(IsKey = true)]
     public string? Login { get; set; }
     [EntityField(IsKey = true)]

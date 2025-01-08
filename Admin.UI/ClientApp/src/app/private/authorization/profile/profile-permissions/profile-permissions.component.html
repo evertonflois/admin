@@ -37,8 +37,8 @@
                 </div>
                 <div class="col col-12 md:col-10">
                     <div class="text-center" style="margin-top: 6px;">            
-                        <p-inputSwitch [(ngModel)]="onlyAllowed" (click)="changeAllowedFilter(onlyNotAllowed)" [disabled]="onlyNotAllowed"></p-inputSwitch><label class="switchAllowed"  [style]="{ 'color': onlyNotAllowed ? '#b5b5bc' : '#5d5d69' }">Somente permitidos</label>
-                        <p-inputSwitch [(ngModel)]="onlyNotAllowed"  (click)="changeAllowedFilter(onlyAllowed)" [disabled]="onlyAllowed" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotAllowed" [style]="{ 'color': onlyAllowed ? '#b5b5bc' : '#5d5d69' }">Somente não permitidos</label>
+                        <p-inputSwitch [(ngModel)]="onlyAllowed" (click)="changeAllowedFilter(onlyNotAllowed)" [disabled]="onlyNotAllowed"></p-inputSwitch><label class="switchAllowed"  [style]="{ 'color': onlyNotAllowed ? '#b5b5bc' : '#5d5d69' }">Only granted</label>
+                        <p-inputSwitch [(ngModel)]="onlyNotAllowed"  (click)="changeAllowedFilter(onlyAllowed)" [disabled]="onlyAllowed" [style]="{ 'margin-left': '15px' }"></p-inputSwitch><label class="switchNotAllowed" [style]="{ 'color': onlyAllowed ? '#b5b5bc' : '#5d5d69' }">Only denied</label>
                     </div>                    
                 </div>
             </div>            
@@ -48,14 +48,14 @@
                 <th style="min-width: 20px;" pFrozenColumn>
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th style="min-width: 178px;" pSortableColumn="cd_trsc" pFrozenColumn>Código <p-sortIcon field="cd_trsc"></p-sortIcon></th>
-                <th style="min-width: 272px;" pSortableColumn="ds_trsc" pFrozenColumn>Transação <p-sortIcon field="ds_trsc"></p-sortIcon></th>
-                <th style="min-width: 800px;">Ações</th>
+                <th style="min-width: 178px;" pSortableColumn="TransactionCode" pFrozenColumn>Code <p-sortIcon field="TransactionCode"></p-sortIcon></th>
+                <th style="min-width: 272px;" pSortableColumn="Description" pFrozenColumn>Transaction <p-sortIcon field="Description"></p-sortIcon></th>
+                <th style="min-width: 800px;">Actions</th>
             </tr>
             <tr>       
                 <th pFrozenColumn></th>         
-                <th pFrozenColumn><p-columnFilter type="text" field="cd_trsc"></p-columnFilter></th>
-                <th pFrozenColumn><p-columnFilter type="text" field="ds_trsc"></p-columnFilter></th>
+                <th pFrozenColumn><p-columnFilter type="text" field="TransactionCode"></p-columnFilter></th>
+                <th pFrozenColumn><p-columnFilter type="text" field="Description"></p-columnFilter></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -64,11 +64,11 @@
                 <td style="min-width: 20px;" pFrozenColumn>
                     <p-tableCheckbox [value]="row" [disabled]="!can.CanChangePermissions()"></p-tableCheckbox>
                 </td>
-                <td style="min-width: 178px;" pFrozenColumn>{{ row.cd_trsc }}</td>
-                <td style="min-width: 272px;" pFrozenColumn>{{ row.ds_trsc }}</td>
+                <td style="min-width: 178px;" pFrozenColumn>{{ row.TransactionCode }}</td>
+                <td style="min-width: 272px;" pFrozenColumn>{{ row.Description }}</td>
                 <td>
                     <span>
-                        <p-toggleButton *ngFor="let a of row.acoes" [(ngModel)]="a.fl_perm" [onLabel]="a.ds_acao" [offLabel]="a.ds_acao" [disabled]="!can.CanChangePermissions()"></p-toggleButton>
+                        <p-toggleButton *ngFor="let a of row.Actions" [(ngModel)]="a.FlagPermission" [onLabel]="a.Description" [offLabel]="a.Description" [disabled]="!can.CanChangePermissions()"></p-toggleButton>
                     </span>
                 </td>
             </tr>

@@ -24,7 +24,7 @@ namespace Admin.Infra.Repositories.Authorization
                     FROM
 	                    Subscriber (nolock)                    
                     WHERE	                    
-                        Active = 'S'
+                        Active = 'Y'
             ";
 
             return

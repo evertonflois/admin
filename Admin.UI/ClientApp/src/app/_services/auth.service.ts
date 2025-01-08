@@ -30,15 +30,15 @@ export class AuthService {
       return this.getInfoStorage();
     }
 
-    public getAssinante(){
-      return 1;
+    public getSubscriberId(){
+      return this.getUser()?.SubscriberId;
     }
 
     login(login: string, password: string) {
       return this.http.post<any>(`${this.apiUrl}/Auth/Authenticate`, { login, password }, { withCredentials: true })
           .pipe(map(user => {              
                 this.userSubject?.next(user);
-                if (user.success){
+                if (user.Success){
                   this.setInfoStorage(user);
                   this.startRefreshTokenTimer();                  
                 }
@@ -75,7 +75,7 @@ export class AuthService {
         // parse json object from base64 encoded jwt token
         if (!user)
           user = this.getUser();
-        const jwtBase64 = user!.token!.split('.')[1];
+        const jwtBase64 = user!.Token!.split('.')[1];
         const jwtToken = JSON.parse(atob(jwtBase64));
 
         // set a timeout to refresh the token a minute before it expires
@@ -109,7 +109,7 @@ export class AuthService {
 
     private setTokenStorage(user: User)
     {
-      sessionStorage.setItem("_token", JSON.stringify({ token: user.token } || {}));
+      sessionStorage.setItem("_token", JSON.stringify({ token: user.Token } || {}));
     }
 
     private getInfoStorage()

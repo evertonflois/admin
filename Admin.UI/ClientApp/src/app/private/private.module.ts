@@ -48,7 +48,7 @@ import { RightpanelComponent } from './_structure/rightpanel/rightpanel.componen
 import { FooterComponent } from './_structure/footer/footer.component';
 import { ConfigComponent } from './_structure/config/config.component';
 import { BreadcrumbComponent } from './_structure/breadcrumb/breadcrumb.component';
-import { UsuarioComponent } from './authorization/usuario/usuario.component';
+import { UserComponent } from './authorization/user/user.component';
 import { PsTextboxComponent } from './_structure/controls/ps-textbox/ps-textbox.component';
 import { PsSelectComponent } from './_structure/controls/ps-select/ps-select.component';
 import { PsActiveComponent } from './_structure/controls/ps-active/ps-active.component';
@@ -75,7 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BreadcrumbComponent,
     FooterComponent,
     ConfigComponent,
-    UsuarioComponent,
+    UserComponent,
     PsTextboxComponent,
     PsSelectComponent,    
     PsActiveComponent,

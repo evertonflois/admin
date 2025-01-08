@@ -70,16 +70,17 @@ export abstract class CrudBase {
         public confirmationService: ConfirmationService,
         public config: PrimeNGConfig, 
         public translateService: TranslateService){
+            this.defaultFilters = { SubscriberId : { value: this.authService.getSubscriberId() } };
     }
 
     onInit() {
         this.checkAuth();
         this.setBreadcrumb();        
-        this.translateService.setDefaultLang('pt');
+        //this.translateService.setDefaultLang('pt');
     }
     
     afterViewInit() {
-        this.translate('pt');
+        //this.translate('pt');
         this.initCan();
     }
 
@@ -91,19 +92,19 @@ export abstract class CrudBase {
           this.defaultFilters = {};
     
         if (this.onlyActive || this.onlyNotActive)
-          this.defaultFilters.fl_atvo = { value : this.onlyActive ? 'S' : this.onlyNotActive ? 'N' : null };
+          this.defaultFilters.Active = { value : this.onlyActive ? 'Y' : this.onlyNotActive ? 'N' : null };
         else
-          delete this.defaultFilters.fl_atvo;
-    
+          delete this.defaultFilters.Active;
+
         this.initGrid();
       }
 
     checkAuth() {
         const _user = this.authService.getUser();
-        if (_user && _user.transactions) {        
-            const transaction = _user.transactions.find((t: any) => t.code == this.transaction);
+        if (_user && _user.Transactions) {        
+            const transaction = _user.Transactions.find((t: any) => t.Code == this.transaction);
             if (transaction)
-                this.permissions = transaction?.permissions;
+                this.permissions = transaction?.Permissions;
             else
                 this.router.navigateByUrl("/access-denied");
         }
@@ -119,7 +120,7 @@ export abstract class CrudBase {
     setBreadcrumb() {
         if (!this.breadCrumbItems)
         {
-            var menus = this.authService.getUser().menu;
+            var menus = this.authService.getUser().Menu;
             this.findBreadcrumb(menus, this.router.url);
         }
         
@@ -153,19 +154,19 @@ export abstract class CrudBase {
     getTitle() {
         if (this.mode == "form"){
             if (this.editing)
-              return "Editar Registro";
+              return "Edit record";
             else
-              return "Novo Registro";
+              return "New record";
         }
     
-        return "Lista de Registros";
+        return "Record List";
       }
 
     initCan() {
-        this.can.Create = () => (this.mode === 'list' && this.permissions?.some(p => (p == 'CRIAR') ));
-        this.can.Change = () => (this.mode === 'list' && this.permissions?.some(p => (p == 'ALTERAR') ));
-        this.can.Save = () => (this.mode == 'form' && (this.permissions?.some(p => ((p == 'CRIAR' && !this.editing) || (p == 'ALTERAR' && this.editing)))));
-        this.can.Delete = () => (this.editing && this.permissions?.some(p => (p == 'EXCLUIR') ));
+        this.can.Create = () => (this.mode === 'list' && this.permissions?.some(p => (p == 'CREATE') ));
+        this.can.Change = () => (this.mode === 'list' && this.permissions?.some(p => (p == 'CHANGE') ));
+        this.can.Save = () => (this.mode == 'form' && (this.permissions?.some(p => ((p == 'CREATE' && !this.editing) || (p == 'CHANGE' && this.editing)))));
+        this.can.Delete = () => (this.editing && this.permissions?.some(p => (p == 'REMOVE') ));
         this.can.Clean = () => (this.mode == 'form' && !this.editing);
         this.can.Back = () => (this.mode == 'form');
         if (this.toolbar)
@@ -231,7 +232,7 @@ export abstract class CrudBase {
   }
 
   getRowCssClass(index: number, row: any){
-    return (index % 2 == 1 ? 'odd' : '') + (row.fl_atvo == 'N' ? ' row-inactive' : '');
+    return (index % 2 == 1 ? 'odd' : '') + (row.Active == 'N' ? ' row-inactive' : '');
   }
 
   loadGridRows(event: TableLazyLoadEvent) {
@@ -293,7 +294,7 @@ export abstract class CrudBase {
 
     getPageReportTemplate(): string {
         const pageRecords = this.first + this.rows;
-        return `Exibindo ${this.gridRows?.length > 0 ? this.first + 1 : 1} até ${this.totalRecords < pageRecords ? this.totalRecords : pageRecords} de ${this.totalRecords} registros`;
+        return `Showing ${this.gridRows?.length > 0 ? this.first + 1 : 1} to ${this.totalRecords < pageRecords ? this.totalRecords : pageRecords} of ${this.totalRecords} records`;
     }
 
     exportPdf() {
@@ -371,7 +372,7 @@ export abstract class CrudBase {
     editSelectedRow(){
         if (!this.selectedRow)
         {
-        this.msgService.add({ key: 'tst', severity: 'warn', summary: 'Atenção!', detail: "Selecione uma linha para a edição." }); 
+        this.msgService.add({ key: 'tst', severity: 'warn', summary: 'Aviso!', detail: "Selecione uma linha para a edição." }); 
         return;
         }
         this.edit(this.selectedRow);
@@ -396,8 +397,8 @@ export abstract class CrudBase {
   
     serverToModel(res: any){
     
-        if (res.fl_atvo)
-        res.fl_atvo = res.fl_atvo == 'S';
+        if (res.Active)
+            res.Active = res.Active == 'Y';
     
         return res;
     }
@@ -420,7 +421,7 @@ export abstract class CrudBase {
         this.detail = undefined;
         this.selectsLoaded = false;
         this.model = {
-            fl_atvo : true
+            Active : true
         }
         }, 50);
     }
@@ -428,13 +429,13 @@ export abstract class CrudBase {
     remove(event: Event){  
         this.confirmationService.confirm({
         target: event.target as EventTarget,
-        message: 'Tem certeza que deseja remover esse registro?',
-        header: 'Confirmação',
+        message: 'Are you sure?',
+        header: 'Confirm',
         icon: 'pi pi-info-circle',
         acceptButtonStyleClass:"p-button-danger p-button-text",
         rejectButtonStyleClass:"p-button-text p-button-text",
-        acceptLabel: "Sim",
-        rejectLabel: "Não",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         acceptIcon:"none",
         rejectIcon:"none",
     
@@ -442,11 +443,11 @@ export abstract class CrudBase {
             this.modelToServer();
             this.dataService.remove(this.serverModel)
             .then((res: any) => {    
-                this.msgService.add({ key: 'tst', severity: res.code == 0 ? 'success' : 'error', summary: 'Atenção!', detail: res.description });
+                this.msgService.add({ key: 'tst', severity: res.code == 0 ? 'success' : 'error', summary: 'Attention!', detail: res.description });
         
                 if (res.code == 0)
                 this.back(true);
-            }).catch((error: any) => (this.msgService.add({ key: 'tst', severity: 'error', summary: 'Atenção!', detail: error.message })));
+            }).catch((error: any) => (this.msgService.add({ key: 'tst', severity: 'error', summary: 'Error!', detail: error.message })));
         },
         reject: () => {
             
@@ -470,11 +471,11 @@ export abstract class CrudBase {
         
         (!this.editing ? this.dataService.create(this.serverModel) : this.dataService.change(this.serverModel))
         .then((res: any) => {    
-            this.msgService.add({ key: 'tst', severity: res.code == 0 ? 'success' : 'error', summary: 'Atenção!', detail: res.description });
+            this.msgService.add({ key: 'tst', severity: res.Code == 0 ? 'success' : 'error', summary: 'Attention!', detail: res.Description });
     
-            if (res.code == 0)
+            if (res.Code == 0)
             this.back(true);
-        }).catch((error: any) => (this.msgService.add({ key: 'tst', severity: 'error', summary: 'Atenção!', detail: error.message })));
+        }).catch((error: any) => (this.msgService.add({ key: 'tst', severity: 'error', summary: 'Error!', detail: error.message })));
     }
     
     modelToServer() {
@@ -484,8 +485,8 @@ export abstract class CrudBase {
         for (let index = 0; index < props.length; index++) {
         const prop = props[index];
         
-        if (prop == 'fl_atvo') {
-            this.serverModel.fl_atvo = this.model.fl_atvo ? "S" : "N"; 
+        if (prop == 'Active') {
+            this.serverModel.Active = this.model.Active ? "Y" : "N"; 
             continue;
         }
     
@@ -522,7 +523,7 @@ export abstract class CrudBase {
         var props = Object.keys(this.detail);
         for (let index = 0; index < props.length; index++) {
             const prop = props[index];
-            if (!this.model[prop] || prop == 'fl_atvo')
+            if (!this.model[prop] || prop == 'Active')
             this.model[prop] = this.detail[prop];
         }      
         }

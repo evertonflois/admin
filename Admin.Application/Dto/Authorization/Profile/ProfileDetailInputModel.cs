@@ -2,6 +2,6 @@
 
 public class ProfileDetailInputModel
 {
-    public string? SubscriberId { get; set; }
+    public Guid? SubscriberId { get; set; }
     public string? ProfileCode { get; set; }
 }

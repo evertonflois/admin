@@ -19,7 +19,7 @@ declare var $: any;
 export class ProfilePermissionsComponent extends CrudBase implements OnInit, AfterViewInit {
   
   @Input()
-  perfil!: any;
+  profile!: any;
 
   @ViewChild("rowInfo") 
   private _rowInfo!: PsRowinfoComponent;
@@ -31,7 +31,7 @@ export class ProfilePermissionsComponent extends CrudBase implements OnInit, Aft
   onlyAllowed!: boolean;
   onlyNotAllowed!: boolean;
 
-  transaction = "706";
+  transaction = "Profile";
 
   constructor(public authService: AuthService, 
     public breadcrumbService: BreadcrumbService, 
@@ -52,9 +52,9 @@ export class ProfilePermissionsComponent extends CrudBase implements OnInit, Aft
     super.onInit(); 
     this.can = {
       Back: () => (true),
-      CanChangePermissions: () => (this.permissions?.some(p => (p == 'ALTE_PERM')))
+      CanChangePermissions: () => (this.permissions?.some(p => (p == 'CHANGE_PERM')))
     };  
-    this.sortField = "cd_trsc";    
+    this.sortField = "TransactionCode";    
   }
   
   ngAfterViewInit() {    
@@ -64,36 +64,36 @@ export class ProfilePermissionsComponent extends CrudBase implements OnInit, Aft
   
   getCols() {
     return [
-      { field: 'cd_trsc', header: 'Código' },      
-      { field: 'ds_trsc', header: 'Transação' },
-      { field: 'acoes', header: 'Ações' }      
+      { field: 'TransactionCode', header: 'Code' },      
+      { field: 'Description', header: 'Description' },
+      { field: 'Actions', header: 'Actions' }      
   ];
   }
 
-  loadPermissions(perfil: any){
-    this.perfil = perfil;
+  loadPermissions(profile: any){
+    this.profile = profile;
     this.setRowInfo();
     this.defaultFilters = {
-      cd_asnt: { value: perfil.cd_asnt },
-      cd_perf: { value: perfil.cd_perf },
+      SubscriberId: { value: profile.SubscriberId },
+      ProfileCode: { value: profile.ProfileCode },
     };
     super.initGrid();    
   }
 
   setRowInfo() {
-    this._rowInfo.selectedRowInfo = [{ label: "Perfil", value: `${this.perfil.cd_perf} - ${this.perfil.ds_perf}` }];
+    this._rowInfo.selectedRowInfo = [{ label: "Profile", value: `${this.profile.ProfileCode} - ${this.profile.Description}` }];
   }
 
   getKey(row: any)  {
-    return { cd_asnt : row.cd_asnt, cd_perf : row.cd_perf };
+    return { SubscriberId : row.SubscriberId, ProfileCode : row.ProfileCode };
   }
 
   getPdfBody() {
-      return this.gridRows.map(r => ([r.cd_trsc, r.ds_trsc, r.acoes.map((a: any) => (a.ds_acao))]));
+      return this.gridRows.map(r => ([r.TransactionCode, r.Description, r.Actions.map((a: any) => (a.Description))]));
   }
 
   getExcelBody() {
-    return this.gridRows.map(r => ({ "Código": r.cd_trsc, "Transação": r.ds_trsc, "Ações": r.acoes.map((a: any) => a.ds_acao).join(',') }))
+    return this.gridRows.map(r => ({ "Código": r.TransactionCode, "Transação": r.Description, "Ações": r.Actions.map((a: any) => a.Description).join(',') }))
   }
 
   onRowSelect(event: any) {    
@@ -101,7 +101,7 @@ export class ProfilePermissionsComponent extends CrudBase implements OnInit, Aft
   }
 
   onGridLoaded() {
-    this.selectedRows = this.gridRows.filter(r => r.fl_perm );
+    this.selectedRows = this.gridRows.filter(r => r.FlagPermission );
     $(this.dt.el.nativeElement).find("thead tr:eq(0) th:eq(1)").css("left", "34px");
     $(this.dt.el.nativeElement).find("thead tr:eq(1) th:eq(1)").css("left", "34px");
     $(this.dt.el.nativeElement).find("thead tr:eq(0) th:eq(2)").css("left", "212px");
@@ -113,9 +113,9 @@ export class ProfilePermissionsComponent extends CrudBase implements OnInit, Aft
       return;
 
     if (this.onlyAllowed || this.onlyNotAllowed)
-      this.defaultFilters.fl_perm = { value : this.onlyAllowed ? 'S' : this.onlyNotAllowed ? 'N' : null };
+      this.defaultFilters.FlagPermission = { value : this.onlyAllowed ? 'Y' : this.onlyNotAllowed ? 'N' : null };
     else
-      delete this.defaultFilters.fl_perm;
+      delete this.defaultFilters.FlagPermission;
 
     super.initGrid();
   }
@@ -124,12 +124,12 @@ export class ProfilePermissionsComponent extends CrudBase implements OnInit, Aft
     
     for (let index = 0; index < this.gridRows.length; index++) {
       const row = this.gridRows[index];      
-      row.fl_perm = this.selectedRows.indexOf(row) != -1;      
+      row.FlagPermission = this.selectedRows.indexOf(row) != -1;      
     }
 
     this.dataService.change(this.gridRows)
         .then((res: any) => {    
-            this.msgService.add({ key: 'tst', severity: res.code == 0 ? 'success' : 'error', summary: 'Atenção!', detail: res.description });
+            this.msgService.add({ key: 'tst', severity: res.code == 0 ? 'success' : 'error', summary: 'Attention!', detail: res.description });
     
             if (res.code == 0)
             this.back(true);

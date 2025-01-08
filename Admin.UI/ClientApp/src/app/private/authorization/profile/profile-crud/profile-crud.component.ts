@@ -32,7 +32,7 @@ export class ProfileCrudComponent extends CrudBase implements OnInit, AfterViewI
   @Output()
   profileSelected = new EventEmitter();
 
-  transaction = "706";
+  transaction = "Profile";
 
   constructor(public authService: AuthService, 
     public breadcrumbService: BreadcrumbService, 

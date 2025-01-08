@@ -28,12 +28,12 @@ namespace Admin.Infra.Persistence.Repository
         protected IDbTransaction _transaction => _uoW.Transaction;
 
         protected string _table = string.Empty;
-        protected bool _flagAtivo = false;        
+        protected bool _flagActive = false;        
 
-        public RepositoryBase(IUnitOfWorkRepository uoW, string table, bool flagAtivo = false)
+        public RepositoryBase(IUnitOfWorkRepository uoW, string table, bool flagActive = false)
         {
             _uoW = uoW;
-            _flagAtivo = flagAtivo;
+            _flagActive = flagActive;
             _table = table;
         }        
 
@@ -159,22 +159,22 @@ namespace Admin.Infra.Persistence.Repository
 
         #region command/query building
 
-        public virtual string getColumnFlagAtivo()
+        public virtual string getColumnActive()
         {
-            return "fl_atvo";
+            return "Active";
         }
 
-        public virtual string getValorFlagAtivo()
+        public virtual string getActiveValue()
         {
-            return "S";
+            return "Y";
         }
 
         public virtual string getAllQuery(object param)
         {
             string sqlAllQuery = string.Format("select * from {0}", _table);
 
-            if (_flagAtivo)
-                sqlAllQuery = string.Concat(sqlAllQuery, " where {0} = '{1}'", getColumnFlagAtivo(), getValorFlagAtivo());
+            if (_flagActive)
+                sqlAllQuery = string.Concat(sqlAllQuery, " where {0} = '{1}'", getColumnActive(), getActiveValue());
 
             if (param != null)
             {
@@ -194,7 +194,7 @@ namespace Admin.Infra.Persistence.Repository
         public virtual string getAllQueryFilterPrincipal(string sortField, string sortOrder)
         {
             return string.Format(@"select 
-                                    nr_linh = row_number() over (order by {0}{1} {2}),
+                                    rowNumber = row_number() over (order by {0}{1} {2}),
                                     * 
                                 from 
                                     {3} t1 (nolock)",
@@ -237,8 +237,8 @@ namespace Admin.Infra.Persistence.Repository
 
             sqlAllQuery = string.Concat(sqlAllQuery, getAllQueryFilterPrincipal(sortField, sortOrder));  
 
-            if (_flagAtivo)
-                sqlAllQuery = string.Concat(sqlAllQuery, " where {0} = '{1}'", getColumnFlagAtivo(), getValorFlagAtivo());
+            if (_flagActive)
+                sqlAllQuery = string.Concat(sqlAllQuery, " where {0} = '{1}'", getColumnActive(), getActiveValue());
 
             sqlAllQuery = string.Concat(sqlAllQuery, getAllQueryFilterCondition(filter));
 
@@ -246,15 +246,16 @@ namespace Admin.Infra.Persistence.Repository
 
             sqlAllQuery = string.Concat(sqlAllQuery, string.Format(@"select
                                                              *
-                                                            ,rowscount	= (select max(nr_linh) from tb_sele)
+                                                            ,rowscount	= (select max(rowNumber) from tb_sele)
                                                        from
                                                             tb_sele
                                                        where
-                                                            nr_linh between 
+                                                            rowNumber between 
                                                         (({0} * {1})  - ({2} -1)) and ({3} * {4})
                                                         ", pageNumber, pageSize, pageSize, pageNumber, pageSize));
 
-            sqlAllQuery = string.Concat(sqlAllQuery, string.Format(" order by {0} {1}", sortField, sortOrder));
+            if (!string.IsNullOrEmpty(sortField) && !string.IsNullOrEmpty(sortOrder))
+                sqlAllQuery = string.Concat(sqlAllQuery, string.Format(" order by {0} {1}", sortField, sortOrder));
             
             return sqlAllQuery;
         }
@@ -311,7 +312,7 @@ namespace Admin.Infra.Persistence.Repository
 
             string sqlCreateCommand = @"BEGIN TRY 
                                             INSERT {0} ({1}) values ({2});
-                                            SELECT 0 AS return_code,'Registro criado com sucesso.' AS return_chav
+                                            SELECT 0 AS return_code,'Created successfully.' AS return_chav
                                         END TRY
                                         BEGIN CATCH
                                             SELECT @@ERROR AS return_code, ERROR_MESSAGE() AS return_chav
@@ -348,7 +349,7 @@ namespace Admin.Infra.Persistence.Repository
 
             string sqlChangeCommand = @"BEGIN TRY 
                                             UPDATE {0} SET {1} WHERE {2};
-                                            SELECT 0 AS return_code,'Registro alterado com sucesso.' AS return_chav
+                                            SELECT 0 AS return_code,'Changed successfully.' AS return_chav
                                         END TRY
                                         BEGIN CATCH
                                             SELECT @@ERROR AS return_code, ERROR_MESSAGE() AS return_chav
@@ -377,7 +378,7 @@ namespace Admin.Infra.Persistence.Repository
 
             string sqlRemoveCommand = @"BEGIN TRY 
                                             DELETE {0} WHERE {1};
-                                            SELECT 0 AS return_code,'Registro removido com sucesso.' AS return_chav
+                                            SELECT 0 AS return_code,'Removed successfully.' AS return_chav
                                         END TRY
                                         BEGIN CATCH
                                             SELECT @@ERROR AS return_code, ERROR_MESSAGE() AS return_chav

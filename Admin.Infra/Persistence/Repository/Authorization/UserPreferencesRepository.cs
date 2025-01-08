@@ -8,7 +8,7 @@ namespace Admin.Infra.Repositories.Authorization
 {
     public class UserPreferencesRepository : RepositoryBase<UserPreferences, ResponseBase>, IUserPreferencesRepository
     {
-        public UserPreferencesRepository(IUnitOfWorkRepository uoW) : base(uoW, "UserPreferencesRepository")
+        public UserPreferencesRepository(IUnitOfWorkRepository uoW) : base(uoW, "UserPreferences")
         {
         }        
     }

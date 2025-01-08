@@ -12,12 +12,12 @@ import { PsToolbarComponent } from '../../_structure/controls/ps-toolbar/ps-tool
 declare var $: any;
 
 @Component({
-  selector: 'app-usuario',
-  templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css'],
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css'],
   providers: [UserService, SubscriberService, ProfileService],
 })
-export class UsuarioComponent extends CrudBase implements OnInit, AfterViewInit {
+export class UserComponent extends CrudBase implements OnInit, AfterViewInit {
   @ViewChild("toolbar") 
   private _toolbar!: PsToolbarComponent;
 
@@ -30,7 +30,7 @@ export class UsuarioComponent extends CrudBase implements OnInit, AfterViewInit 
   @ViewChildren(PsSelectComponent) 
   private _selects!: QueryList<PsSelectComponent>;
 
-  transaction = "710";  
+  transaction = "User";  
 
   constructor(public authService: AuthService, 
               public breadcrumbService: BreadcrumbService, 
@@ -49,11 +49,11 @@ export class UsuarioComponent extends CrudBase implements OnInit, AfterViewInit 
   }  
 
   ngOnInit(): void {
-    super.onInit(); 
-    this.sortField = "cd_user";    
+    super.onInit();     
   }
 
   ngAfterViewInit() {    
+    this.sortField = "Login";
     this.toolbar = this._toolbar;
     this.dt = this._dt;  
     this.form = this._form;
@@ -65,22 +65,22 @@ export class UsuarioComponent extends CrudBase implements OnInit, AfterViewInit 
   
   getCols() {
     return [
-      { field: 'cd_user', header: 'Login' },
-      { field: 'nm_user', header: 'Nome' },
-      { field: 'ds_perf', header: 'Perfil' }      
+      { field: 'Login', header: 'Login' },
+      { field: 'Name', header: 'Name' },
+      { field: 'ProfileDescription', header: 'Profile' }      
   ];
   }
 
   getKey(row: any)  {
-    return { cd_asnt : row.cd_asnt, cd_enti : row.cd_enti, cd_user : row.cd_user };
+    return { SubscriberId : row.SubscriberId, Login : row.Login };
   }
 
   getPdfBody() {
-      return this.gridRows.map(r => ([r.cd_user, r.nm_user, r.ds_perf]));
+      return this.gridRows.map(r => ([r.Login, r.Name, r.ProfileDescription]));
   }
 
   getExcelBody() {
-      return this.gridRows.map(r => ({ Login: r.cd_user, Nome: r.nm_user, Perfil: r.ds_perf }));
+      return this.gridRows.map(r => ({ Login: r.Login, Nome: r.Name, Profile: r.ProfileDescription }));
   }
 
 }

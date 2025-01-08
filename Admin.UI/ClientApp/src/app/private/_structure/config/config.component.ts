@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/_services';
   selector: 'app-config',
   template: `
         <div class="layout-config" [ngClass]="{'layout-config-active': appMain.configActive}" (click)="appMain.onConfigClick($event)">
-            <h5>Tipo de Menu</h5>
+            <h5>Menu Type</h5>
             <div class="field-radiobutton">
                 <p-radioButton name="layoutMode" value="static" [(ngModel)]="app.layoutMode" inputId="layoutMode1" (click)="changeLayoutMode()"></p-radioButton>
                 <label for="layoutMode1">Static</label>
@@ -29,7 +29,7 @@ import { AuthService } from 'src/app/_services';
 
             <hr />
 
-            <h5>Cor do Menu</h5>
+            <h5>Menu Color</h5>
             <div class="field-radiobutton">
                 <p-radioButton name="menuMode" value="light" [(ngModel)]="app.menuMode" inputId="menuMode1" (click)="changeLayoutMode()"></p-radioButton>
                 <label for="menuMode1">Light</label>
@@ -61,9 +61,8 @@ export class ConfigComponent implements OnInit {
 
     const user = this.authService.getUser();
     const userPrefKey = { 
-                cd_asnt: this.authService.getAssinante(),
-                cd_enti: user.codigoEntidade,
-                cd_user: user.login
+                SubscriberId: this.authService.getSubscriberId(),
+                Login: user.Login
     };
     this.usuarioPrefenciasService.getDetails(userPrefKey).subscribe((res: UserPreferences) => {
         if (res)
@@ -158,8 +157,8 @@ export class ConfigComponent implements OnInit {
 
     const user = this.authService.getUser();
     const usuarioPreferenciasSave: UserPreferences = { 
-                SubscriberId: this.authService.getAssinante(),
-                Login: user.login,
+                SubscriberId: this.authService.getSubscriberId(),
+                Login: user.Login,
                 MenuType: this.app.layoutMode,
                 MenuColor: this.app.menuMode
     };

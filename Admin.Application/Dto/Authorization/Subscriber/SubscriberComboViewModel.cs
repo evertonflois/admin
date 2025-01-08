@@ -2,6 +2,6 @@
 
 public class SubscriberComboViewModel
 {
-    public string? SubscriberId { get; set; }
+    public Guid? SubscriberId { get; set; }
     public string? Name { get; set; }        
 }

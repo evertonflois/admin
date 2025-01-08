@@ -2,6 +2,6 @@
 
 public class UserDetailInputModel
 {
-    public string? SubscriberId { get; set; }    
+    public Guid? SubscriberId { get; set; }    
     public string? Login { get; set; }
 }

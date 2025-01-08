@@ -39,7 +39,7 @@ namespace Admin.Application.Services.Authorization
                     {
 
                         var filterSearch = new List<Filter>();
-                        filterSearch.Add(new Filter("SubscriberId", item.SubscriberId));
+                        filterSearch.Add(new Filter("SubscriberId", item.SubscriberId.ToString()));
                         filterSearch.Add(new Filter("TransactionCode", item.TransactionCode));
                         filterSearch.Add(new Filter("ProfileCode", item.ProfileCode));
                         item.Actions = _mapper.Map<IEnumerable<TransactionActionGridViewModel>>(await _repositoryTransactionActions.GetAllFilterAsync(filterSearch, "ActionCode", "asc", 1, 9999));

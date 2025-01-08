@@ -64,14 +64,14 @@ export class LoginComponent {
         .subscribe({
             next: () => {
               const user = this.authService?.getUser();
-               if (user?.success)
+               if (user?.Success)
                {
                   // get return url from route parameters or default to '/'
-                  const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                  const returnUrl = this.route.snapshot.queryParams['returnUrl'] || (user?.Login == 'admin' ? 'authorization/user' : '/');
                   this.router.navigate([returnUrl]);
                }
                else
-                this.msgService.add({ key: 'tst', severity: 'error', summary: 'Attention!', detail: user?.message });
+                this.msgService.add({ key: 'tst', severity: 'error', summary: 'Attention!', detail: user?.Message });
             },
             error: error => {
                 this.error = error;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Certificate;
+using Microsoft.AspNetCore.Mvc;
 
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -12,6 +13,8 @@ namespace Admin.UI
             //services.AddDatabaseDeveloperPageExceptionFilter();
 
             //services.AddSingleton<ICurrentUserService, CurrentUserService>();
+
+            services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme).AddCertificate();
 
             services.AddHttpContextAccessor();
 

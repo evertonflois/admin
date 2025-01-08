@@ -2,7 +2,7 @@
 
 public class TransactionActions : BaseEntity
 {
-    public string? SubscriberId { get; set; }
+    public Guid? SubscriberId { get; set; }
     public string? TransactionCode { get; set; }
     public string? ActionCode { get; set; }
     public string? Description { get; set; }

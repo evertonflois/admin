@@ -55,7 +55,7 @@ public class AuthAppService : IAuthAppService
                     return result;
                 }
 
-                user = new User() { SubscriberId = Guid.NewGuid().ToString(), Login = model.Login };                
+                user = new User() { SubscriberId = Guid.NewGuid(), Login = model.Login };                
             }
             else
             {
@@ -78,14 +78,24 @@ public class AuthAppService : IAuthAppService
             _ = await _refreshTokenRepository.CreateAsync(refreshToken);
 
             _ = await _refreshTokenRepository.RemoveOldByUserAsync(model.Login, _appSettings.RefreshTokenTTL);
-                        
+
+            result.SubscriberId = user.SubscriberId;
+            
             result.RefreshToken = refreshToken.Token;
             result.Success = true;
             if (!string.IsNullOrEmpty(user.ProfileCode))
             {
                 result.Transactions = await getTransactions(user.ProfileCode);
                 result.Menu = await getMenu(user.ProfileCode);
+            } else if (model.Login.Equals(_appSettings.Admin.Login))
+            {
+                result.Transactions = new List<TransactionViewModel>()
+                {
+                    new() {Code = "User", Description = "User Registry", Permissions = new string[] { "CREATE", "CHANGE", "REMOVE" } }
+                };
+
             }
+
 
             await _uoW.SaveChangesAsync();
         }
@@ -112,7 +122,7 @@ public class AuthAppService : IAuthAppService
                 if (!refreshToken.IsActive)
                     throw new AppException("Invalid token");
 
-                var userSearch = await _repository.GetAllAsync(new { cd_user = refreshToken.Login });
+                var userSearch = await _repository.GetAllAsync(new { Login = refreshToken.Login });
                 var user = userSearch.FirstOrDefault();
 
                 if (user == null)

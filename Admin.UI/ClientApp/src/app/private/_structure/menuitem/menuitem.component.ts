@@ -12,27 +12,27 @@ import { MenuAppService } from 'src/app/_services/menu-app.service';
     /* tslint:enable:component-selector */
     template: `
     <ng-container>
-        <a [attr.href]="item.url" (click)="itemClick($event)" *ngIf="(!item.routerLink || item.items) && item.visible !== false"
+        <a [attr.href]="item.Url" (click)="itemClick($event)" *ngIf="(!item.RouterLink || item.Items) && item.Visible !== false"
         (mouseenter)="onMouseEnter()" (keydown.enter)="itemClick($event)"
-        [attr.target]="item.target" [attr.tabindex]="0" [ngClass]="item.class" pRipple>
-            <i class="layout-menuitem-icon" [ngClass]="item.icon"></i>
-            <span>{{item.label}}</span>
+        [attr.target]="item.target" [attr.tabindex]="0" [ngClass]="item.Class" pRipple>
+            <i class="layout-menuitem-icon" [ngClass]="item.Icon"></i>
+            <span>{{item.Label}}</span>
             <span class="menuitem-badge" [ngClass]="item.badgeStyleClass" *ngIf="item.badge">{{item.badge}}</span>
-            <i class="pi pi-fw pi-angle-down layout-menuitem-toggler" *ngIf="item.items"></i>
+            <i class="pi pi-fw pi-angle-down layout-menuitem-toggler" *ngIf="item.Items"></i>
         </a>
-        <a (click)="itemClick($event)" (mouseenter)="onMouseEnter()" *ngIf="(item.routerLink && !item.items) && item.visible !== false"
-        [routerLink]="item.routerLink" routerLinkActive="active-menuitem-routerlink"
-        [routerLinkActiveOptions]="{exact: !item.preventExact}" [attr.target]="item.target" [attr.tabindex]="0" [ngClass]="item.class" pRipple>
-            <i class="layout-menuitem-icon" [ngClass]="item.icon"></i>
-            <span>{{item.label}}</span>
+        <a (click)="itemClick($event)" (mouseenter)="onMouseEnter()" *ngIf="(item.RouterLink && !item.Items) && item.Visible !== false"
+        [routerLink]="item.RouterLink" routerLinkActive="active-menuitem-routerlink"
+        [routerLinkActiveOptions]="{exact: !item.preventExact}" [attr.target]="item.target" [attr.tabindex]="0" [ngClass]="item.Class" pRipple>
+            <i class="layout-menuitem-icon" [ngClass]="item.Icon"></i>
+            <span>{{item.Label}}</span>
             <span class="menuitem-badge" [ngClass]="item.badgeStyleClass" *ngIf="item.badge">{{item.badge}}</span>
-            <i class="pi pi-fw pi-angle-down layout-menuitem-toggler" *ngIf="item.items"></i>
+            <i class="pi pi-fw pi-angle-down layout-menuitem-toggler" *ngIf="item.Items"></i>
         </a>
-        <div class="submenu-arrow" *ngIf="item.items && item.visible !== false"></div>
-        <ul *ngIf="(item.items && active) && item.visible !== false"
+        <div class="submenu-arrow" *ngIf="item.Items && item.Visible !== false"></div>
+        <ul *ngIf="(item.Items && active) && item.Visible !== false"
             [@children]="((app.isSlim()||app.isHorizontal()) && root) ? (active ? 'visible' : 'hidden') :
             (active ? 'visibleAnimated' : 'hiddenAnimated')">
-            <ng-template ngFor let-child let-i="index" [ngForOf]="item.items">
+            <ng-template ngFor let-child let-i="index" [ngForOf]="item.Items">
                 <li app-menuitem [item]="child" [index]="i" [parentKey]="key" [class]="child.badgeClass"></li>
             </ng-template>
         </ul>
@@ -107,7 +107,7 @@ export class MenuitemComponent implements OnInit, OnDestroy {
                 if (this.app.isSlim() || this.app.isHorizontal()) {
                     this.active = false;
                 } else {
-                    if (this.item.routerLink) {
+                    if (this.item.RouterLink) {
                         this.updateActiveStateFromRoute();
                     } else {
                         this.active = false;
@@ -117,7 +117,7 @@ export class MenuitemComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (!(this.app.isSlim() || this.app.isHorizontal()) && this.item.routerLink) {
+        if (!(this.app.isSlim() || this.app.isHorizontal()) && this.item.RouterLink) {
             this.updateActiveStateFromRoute();
         }
 
@@ -125,7 +125,7 @@ export class MenuitemComponent implements OnInit, OnDestroy {
     }
 
     updateActiveStateFromRoute() {
-        this.active = this.router.isActive(this.item.routerLink[0], !this.item.items && !this.item.preventExact);
+        this.active = this.router.isActive(this.item.RouterLink[0], !this.item.Items && !this.item.preventExact);
     }
 
     itemClick(event: Event) {
@@ -149,7 +149,7 @@ export class MenuitemComponent implements OnInit, OnDestroy {
         }
 
         // toggle active state
-        if (this.item.items) {
+        if (this.item.Items) {
             this.active = !this.active;
         } else {
             // activate item

@@ -21,7 +21,7 @@ export class ProfileComponent extends CrudBase implements OnInit, OnDestroy {
   profileSelected!: any;
   tabsSubscription!: Subscription;
   
-  transaction = "706";
+  transaction = "Profile";
 
   constructor(public authService: AuthService, 
     public breadcrumbService: BreadcrumbService, 

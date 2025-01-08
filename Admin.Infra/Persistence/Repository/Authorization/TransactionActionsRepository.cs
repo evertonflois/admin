@@ -21,7 +21,7 @@ namespace Admin.Infra.Repositories.Authorization
                                         rowNumber = row_number() over (order by {0}{1} {2}),
                                         t1.ActionCode,
 	                                    t1.Description,
-	                                    fl_perm = case when t2.ActionCode is not null then 'Y' else 'N' end
+	                                    FlagPermission = case when t2.ActionCode is not null then 'Y' else 'N' end
                                     FROM
 	                                    TransactionActions t1 (nolock)
                                     LEFT JOIN
